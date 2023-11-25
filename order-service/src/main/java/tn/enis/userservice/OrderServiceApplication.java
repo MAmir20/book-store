@@ -1,13 +1,12 @@
-package tn.enis.orderservice;
+package tn.enis.userservice;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import tn.enis.orderservice.model.Order;
-import tn.enis.orderservice.repository.OrderRepository;
+import tn.enis.userservice.model.Order;
+import tn.enis.userservice.repository.OrderRepository;
 
-import java.util.Date;
 import java.util.List;
 
 @SpringBootApplication
