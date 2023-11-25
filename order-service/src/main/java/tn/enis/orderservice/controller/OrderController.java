@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import tn.enis.orderservice.mdel.Order;
+import tn.enis.orderservice.model.Order;
 import tn.enis.orderservice.repository.OrderRepository;
 
 import java.util.List;
