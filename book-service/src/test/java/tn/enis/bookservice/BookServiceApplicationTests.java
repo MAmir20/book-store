@@ -1,10 +1,10 @@
-package tn.enis.orderservice;
+package tn.enis.bookservice;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class OrderServiceApplicationTests {
+class BookServiceApplicationTests {
 
 	@Test
 	void contextLoads() {

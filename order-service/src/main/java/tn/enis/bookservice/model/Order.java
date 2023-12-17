@@ -1,4 +1,4 @@
-package tn.enis.orderservice.model;
+package tn.enis.bookservice.model;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
