@@ -13,7 +13,7 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
     List<Order> findByDate(Date date);
     List<Order> findByDateGreaterThan(Date date);
 
-    List<Order> findByDelivery(Date delivery_date);
+    List<Order> findByDeliveryDate(Date delivery_date);
     List<Order> findByDeliveryDateGreaterThan(Date delivery_date);
 
     List<Order> findByStatus(String status);
