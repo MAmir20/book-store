@@ -20,7 +20,8 @@ public class Order {
     private Long id;
     private Date date;
     private String status;
-    private String delivery_date;
+    private String payment;
+    private Date deliveryDate;
 
     @Override
     public String toString() {
@@ -28,8 +29,8 @@ public class Order {
                 "id=" + id +
                 ", date='" + date + '\'' +
                 ", status=" + status +
-                ", delivery date=" + delivery_date +
+                ", delivery date=" + deliveryDate +
+                ", payment_method=" + payment +
                 '}';
     }
-
 }
