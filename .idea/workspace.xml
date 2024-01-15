@@ -5,19 +5,23 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="79b5b873-33b9-446f-93e9-f10acb1815cb" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/book-service/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/book-service/src/main/java/tn/enis/bookservice/controller/AuthorController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/book-service/src/main/java/tn/enis/bookservice/model/Author.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/book-service/src/main/java/tn/enis/bookservice/repository/AuthorRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/order-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/order-service/src/main/java/tn/enis/orderservice/OrderServiceApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/src/main/java/tn/enis/bookservice/OrderServiceApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/order-service/src/main/java/tn/enis/orderservice/controller/OrderController.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/src/main/java/tn/enis/bookservice/controller/OrderController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/order-service/src/main/java/tn/enis/orderservice/model/Order.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/src/main/java/tn/enis/bookservice/model/Order.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/order-service/src/main/java/tn/enis/orderservice/repository/OrderRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/src/main/java/tn/enis/bookservice/repository/OrderRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/order-service/src/test/java/tn/enis/orderservice/OrderServiceApplicationTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/src/test/java/tn/enis/bookservice/OrderServiceApplicationTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/book-service/src/main/java/tn/enis/bookservice/BookServiceApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/book-service/src/main/java/tn/enis/bookservice/BookServiceApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/book-service/src/main/java/tn/enis/bookservice/controller/AuthorController.java" beforeDir="false" afterPath="$PROJECT_DIR$/book-service/src/main/java/tn/enis/bookservice/controller/AuthorController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/book-service/src/main/java/tn/enis/bookservice/controller/BookController.java" beforeDir="false" afterPath="$PROJECT_DIR$/book-service/src/main/java/tn/enis/bookservice/controller/BookController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/book-service/src/main/java/tn/enis/bookservice/controller/CategoryController.java" beforeDir="false" afterPath="$PROJECT_DIR$/book-service/src/main/java/tn/enis/bookservice/controller/CategoryController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/book-service/src/main/java/tn/enis/bookservice/model/Author.java" beforeDir="false" afterPath="$PROJECT_DIR$/book-service/src/main/java/tn/enis/bookservice/model/Author.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/book-service/src/main/java/tn/enis/bookservice/model/Category.java" beforeDir="false" afterPath="$PROJECT_DIR$/book-service/src/main/java/tn/enis/bookservice/model/Category.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/book-service/src/main/java/tn/enis/bookservice/repository/BookRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/book-service/src/main/java/tn/enis/bookservice/repository/BookRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/book-service/src/main/java/tn/enis/bookservice/repository/CategoryRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/book-service/src/main/java/tn/enis/bookservice/repository/CategoryRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/order-service/pom.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/order-service/src/main/java/tn/enis/bookservice/OrderServiceApplication.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/order-service/src/main/java/tn/enis/bookservice/controller/OrderController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/order-service/src/main/java/tn/enis/bookservice/model/Order.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/order-service/src/main/java/tn/enis/bookservice/repository/OrderRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/order-service/src/main/resources/application.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/order-service/src/test/java/tn/enis/bookservice/OrderServiceApplicationTests.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -70,6 +74,7 @@
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
     &quot;onboarding.tips.debug.path&quot;: &quot;F:/pfa/book-store/order-service/src/main/java/org/example/Main.java&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;terminal&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
@@ -85,6 +90,11 @@
       <recent name="tn.enis.bookservice.controller" />
       <recent name="tn.enis.bookservice.model" />
     </key>
+  </component>
+  <component name="RunAnythingCache">
+    <option name="myCommands">
+      <command value="mvn clean verify" />
+    </option>
   </component>
   <component name="RunManager" selected="Spring Boot.BookServiceApplication">
     <configuration name="OrderServiceApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
@@ -107,13 +117,10 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="OrderServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
-      <module name="order-service" />
-      <option name="SPRING_BOOT_MAIN_CLASS" value="tn.enis.bookservice.OrderServiceApplication" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
+    <list>
+      <item itemvalue="Application.OrderServiceApplication" />
+      <item itemvalue="Spring Boot.BookServiceApplication" />
+    </list>
     <recent_temporary>
       <list>
         <item itemvalue="Application.OrderServiceApplication" />
@@ -132,7 +139,10 @@
       <workItem from="1700927377303" duration="12299000" />
       <workItem from="1701011410025" duration="1623000" />
       <workItem from="1701013133571" duration="1137000" />
-      <workItem from="1702806603426" duration="18823000" />
+      <workItem from="1702806603426" duration="19187000" />
+      <workItem from="1702897134794" duration="125000" />
+      <workItem from="1705313953871" duration="7244000" />
+      <workItem from="1705333734201" duration="1944000" />
     </task>
     <servers />
   </component>

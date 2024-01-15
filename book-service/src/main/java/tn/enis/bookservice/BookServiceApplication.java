@@ -4,15 +4,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import tn.enis.bookservice.model.Author;
 import tn.enis.bookservice.model.Book;
 import tn.enis.bookservice.model.Category;
+import tn.enis.bookservice.repository.CategoryRepository;
+import tn.enis.bookservice.model.Author;
 import tn.enis.bookservice.repository.AuthorRepository;
 import tn.enis.bookservice.repository.BookRepository;
-import tn.enis.bookservice.repository.CategoryRepository;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @SpringBootApplication
