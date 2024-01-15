@@ -48,7 +48,6 @@ public class BookServiceApplication implements CommandLineRunner {
 		authorRepository.save(a1);
 		authorRepository.save(a2);
 		authorRepository.save(a3);
-
 		//List<Book> books = bookRepository.findAll();
 		//books.forEach(o->{
 		//	System.out.println(o.toString());});
