@@ -1,10 +1,11 @@
-package tn.enis.bookservice;
+package tn.enis.userservice;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class BookServiceApplicationTests {
+class UserServiceApplicationTests {
+
 	@Test
 	void contextLoads() {
 	}
