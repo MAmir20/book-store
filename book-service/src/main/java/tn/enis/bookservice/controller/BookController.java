@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import tn.enis.bookservice.dto.BookResponse;
 import tn.enis.bookservice.model.Book;
 import tn.enis.bookservice.repository.CategoryRepository;
 import tn.enis.bookservice.model.Author;
@@ -104,6 +105,31 @@ public class BookController {
         } else {
             return ResponseEntity.notFound().build();
         }
+    }
+    @GetMapping("/quantities")
+    @ResponseStatus(HttpStatus.OK)
+    public List<BookResponse> getQuantities(@RequestParam List<Long> id) {
+        return bookRepository.findByIdIn(id)
+                .stream()
+                .map(book ->
+                    BookResponse.builder()
+                            .id(book.getId())
+                            .quantity_in_stock(book.getQuantity())
+                            .build()
+                ).toList();
+    }
+    @GetMapping("/exists")
+    @ResponseStatus(HttpStatus.OK)
+    public List<BookResponse> exists(@RequestParam List<Long> bookId) {
+        return bookRepository.findByIdIn(bookId)
+                .stream()
+                .map(book ->
+                        BookResponse.builder()
+                                .id(book.getId())
+                                .quantity_in_stock(book.getQuantity())
+                                .inStock(book.getQuantity() > 0)
+                                .build()
+                ).toList();
     }
 }
 
