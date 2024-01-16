@@ -16,9 +16,10 @@
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
     <modules>
-        <module>book-service</module>
         <module>user-service</module>
+        <module>book-service</module>
         <module>order-service</module>
+        <module>cart-service</module>
     </modules>
 
     <properties>
