@@ -3,19 +3,24 @@ package tn.enis.bookservice.controller;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import tn.enis.bookservice.dto.BookResponse;
 import tn.enis.bookservice.model.Book;
 import tn.enis.bookservice.repository.CategoryRepository;
 import tn.enis.bookservice.model.Author;
 import tn.enis.bookservice.repository.AuthorRepository;
 import tn.enis.bookservice.repository.BookRepository;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
+@Slf4j
 @RestController
 @RequestMapping("/api/books")
 public class BookController {
@@ -104,6 +109,36 @@ public class BookController {
         } else {
             return ResponseEntity.notFound().build();
         }
+    }
+
+    @PostMapping("/exists")
+    @ResponseStatus(HttpStatus.OK)
+    public List<BookResponse> exists(@RequestBody Map<Long, Integer> books) {
+        List<Long> ids = new ArrayList<>(books.keySet());
+        return bookRepository.findByIdIn(ids)
+                .stream()
+                .map(book ->
+                        BookResponse.builder()
+                                .id(book.getId())
+                                .quantity_in_stock(book.getQuantity())
+                                .inStock(book.getQuantity() >= books.get(book.getId()))
+                                .build()
+                ).toList();
+    }
+
+    @PutMapping("/reduceQty")
+    @ResponseStatus(HttpStatus.OK)
+    public boolean reduceQty(@RequestBody Map<Long, Integer> books) {
+        List<Long> ids = new ArrayList<>(books.keySet());
+        ids.forEach(id -> {
+            Optional<Book> book = bookRepository.findById(id);
+            if (book.isPresent()) {
+                Book b = book.get();
+                b.setQuantity(b.getQuantity() - books.get(id));
+                bookRepository.save(b);
+            }
+        });
+        return true;
     }
 }
 

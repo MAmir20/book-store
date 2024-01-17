@@ -42,5 +42,11 @@ public class UserController {
     public void deleteUser(@PathVariable Long userId) {
         userService.deleteUser(userId);
     }
+
+    @GetMapping("/exists")
+    @ResponseStatus(HttpStatus.OK)
+    public boolean userExists(@RequestParam Long userId) {
+        return userService.userExists(userId);
+    }
 }
 
