@@ -18,8 +18,17 @@ public class CartController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public String newCart(@RequestBody CartRequest cartRequest) {
-        cartService.newCart(cartRequest);
-        return "Book added to cart successfully";
+        if(cartService.newCart(cartRequest)){
+            return "Cart created successfully";
+        } else {
+            return "Error creating cart";
+        }
+    }
+
+    @GetMapping("/{userId}")
+    @ResponseStatus(HttpStatus.OK)
+    public CartResponse getCart(@PathVariable Long userId) {
+        return cartService.getCart(userId);
     }
 }
 

@@ -1,6 +1,7 @@
 package tn.enis.cartservice.dto;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -18,6 +19,7 @@ import java.util.List;
 @NoArgsConstructor
 public class CartResponse {
     private Long id;
+    private Long userId;
     private Date date;
     private Long status;
     private BigDecimal total;

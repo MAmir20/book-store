@@ -5,4 +5,5 @@ import tn.enis.cartservice.model.Cart;
 
 public interface CartRepository extends JpaRepository<Cart, Long> {
 
+    Cart findCartByUserId(Long userId);
 }

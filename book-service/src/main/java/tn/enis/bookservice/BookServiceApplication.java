@@ -39,6 +39,9 @@ public class BookServiceApplication implements CommandLineRunner {
 		Book b1 =new Book("The Magic Tree",4300,3,c1);
 		Book b2 = new Book("Winter Fairy",1200,4,c1);
 		Book b3 = new Book("Wizards of Ice",3200,32,c2);
+		bookRepository.save(b1);
+		bookRepository.save(b2);
+		bookRepository.save(b3);
 		Set<Book> books = new HashSet<>();
 		books.add(b1);
 		books.add(b2);
