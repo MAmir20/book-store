@@ -23,5 +23,5 @@ public class CartResponse {
     private Date date;
     private Long status;
     private BigDecimal total;
-    private List<CartLineItems> cartLineItemsList;
+    private List<CartLineItemsDto> cartLineItemsListDto;
 }

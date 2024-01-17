@@ -24,11 +24,11 @@ import java.util.stream.Collectors;
 @Slf4j
 public class CartService {
     private final CartRepository cartRepository;
-    private final WebClient webClient;
+    private final WebClient.Builder webClientBuilder;
     public boolean newCart(CartRequest cartRequest) {
         // Check if user exists
-        boolean userExists = webClient.get()
-                .uri("http://localhost:8083/api/users/exists",
+        boolean userExists = webClientBuilder.build().get()
+                .uri("http://user-service/api/users/exists",
                         uriBuilder -> uriBuilder
                                 .queryParam("userId", cartRequest.getUserId())
                                 .build())
@@ -43,8 +43,8 @@ public class CartService {
 
         // Check if all books are in stock
         Map<Long, Integer> books = cartRequest.getCartLineItemsDtoList().stream().collect(Collectors.toMap(CartLineItemsDto::getBookId, CartLineItemsDto::getQuantity));
-        BookResponse[] bookResponseArray = webClient.post()
-                .uri("http://localhost:8084/api/books/exists")
+        BookResponse[] bookResponseArray = webClientBuilder.build().post()
+                .uri("http://book-service/api/books/exists")
                 .bodyValue(books)
                 .retrieve()
                 .bodyToMono(BookResponse[].class)
@@ -82,14 +82,9 @@ public class CartService {
         return cartLineItems;
     }
 
-    public CartResponse getCart(Long userId) {
-        Cart cart = cartRepository.findCartByUserId(userId);
-        if(cart == null) {
-            log.error("Cart for user {} does not exist", userId);
-            return null;
-        }
-        log.info("Cart {} is retrieved", cart.getId());
-        return mapToCartResponse(cart);
+    public List<CartResponse> getCartsByUser(Long userId) {
+        List<Cart> carts = cartRepository.findCartsByUserId(userId);
+        return carts.stream().map(this::mapToCartResponse).toList();
     }
 
     private CartResponse mapToCartResponse(Cart cart) {
@@ -99,6 +94,19 @@ public class CartService {
                 .date(cart.getDate())
                 .status(cart.getStatus())
                 .total(cart.getTotal())
+                .cartLineItemsListDto(cart.getCartLineItemsList().stream().map(this::mapToCartLineItemsDto).toList())
                 .build();
+    }
+
+    private CartLineItemsDto mapToCartLineItemsDto(CartLineItems cartLineItems) {
+        return CartLineItemsDto.builder()
+                .bookId(cartLineItems.getBookId())
+                .quantity(cartLineItems.getQuantity())
+                .price(cartLineItems.getPrice())
+                .build();
+    }
+
+    public List<CartResponse> getCarts() {
+        return cartRepository.findAll().stream().map(this::mapToCartResponse).toList();
     }
 }

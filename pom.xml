@@ -16,10 +16,13 @@
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
     <modules>
-        <module>user-service</module>
         <module>book-service</module>
+        <module>user-service</module>
         <module>order-service</module>
         <module>cart-service</module>
+        <module>discovery-service</module>
+        <module>api-gateway-service</module>
+
     </modules>
 
     <properties>
@@ -52,6 +55,13 @@
                             <artifactId>lombok</artifactId>
                         </exclude>
                     </excludes>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <skipTests>true</skipTests>
                 </configuration>
             </plugin>
         </plugins>

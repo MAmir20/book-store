@@ -21,9 +21,8 @@ public class UserServiceApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		//userRepository.save(new User(null,new Date(),"En cours","2023-11-25"));
-		List<User> users = userRepository.findAll();
-		users.forEach(o->{
-			System.out.println(o.toString());});
+		userRepository.save(new User(null, "user1", "user1@gmail.com", "1234"));
+		userRepository.save(new User(null, "user2", "user2@gmail.com", "1234"));
+		userRepository.save(new User(null, "user3", "user3@gmail.com", "1234"));
 	}
 }

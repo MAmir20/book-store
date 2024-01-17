@@ -19,6 +19,5 @@ import java.util.List;
 public class CartRequest {
     private Long userId;
     private Date date;
-    @OneToMany(cascade = CascadeType.ALL)
     private List<CartLineItemsDto> cartLineItemsDtoList;
 }

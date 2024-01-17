@@ -15,7 +15,7 @@ import java.util.List;
 public class CartController {
     private final CartService cartService;
 
-    @PostMapping
+    @PostMapping({"/",""})
     @ResponseStatus(HttpStatus.CREATED)
     public String newCart(@RequestBody CartRequest cartRequest) {
         if(cartService.newCart(cartRequest)){
@@ -27,8 +27,14 @@ public class CartController {
 
     @GetMapping("/{userId}")
     @ResponseStatus(HttpStatus.OK)
-    public CartResponse getCart(@PathVariable Long userId) {
-        return cartService.getCart(userId);
+    public List<CartResponse> getCartsByUser(@PathVariable Long userId) {
+        return cartService.getCartsByUser(userId);
+    }
+
+    @GetMapping({"/",""})
+    @ResponseStatus(HttpStatus.OK)
+    public List<CartResponse> getCarts() {
+        return cartService.getCarts();
     }
 }
 
