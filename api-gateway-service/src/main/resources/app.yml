@@ -1,25 +1,34 @@
 spring:
   cloud:
     gateway:
-      mvc:
-        routes:
-          - id: r1
-            uri: http://localhost:8084/
-            predicates:
-              - Path=/api/books/**
-          - id: r2
-            uri: http://localhost:8083/
-            predicates:
-              - Path=/api/users/**
-          - id: r3
-            uri: http://localhost:8085/
-            predicates:
-              - Path=/api/orders/**
-          - id: r4
-            uri: http://localhost:8082/
-            predicates:
-              - Path=/
-  application:
-    name: api-gateway-service
-server:
-  port: 8081
+      routes:
+        - id: book-service
+          uri: lb://book-service
+          predicates:
+            - Path=/api/books
+        - id: user-service
+          uri: lb://user-service
+          predicates:
+            - Path=/api/users
+        - id: order-service
+          uri: lb://order-service
+          predicates:
+            - Path=/api/orders
+        - id: cart-service
+          uri: lb://cart-service
+          predicates:
+            - Path=/api/carts
+        - id: discovery-service
+          uri: http://localhost:8761
+          predicates:
+            - Path=/eureka/web
+          filters:
+            - RewritePath=SetPath=/
+        - id: discovery-service-static
+          uri: http://localhost:8761
+          predicates:
+            - Path=/eureka/**
+#  application:
+#    name: api-gateway-service
+#server:
+#  port: 8081
