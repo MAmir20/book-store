@@ -14,7 +14,7 @@ import java.util.List;
 public class UserController {
     private final UserService userService;
 
-    @GetMapping
+    @GetMapping({"/",""})
     @ResponseStatus(HttpStatus.OK)
     public List<UserResponse> getAllUsers() {
         return userService.getAllUsers();
@@ -25,7 +25,7 @@ public class UserController {
         return userService.getUser(userId);
     }
 
-    @PostMapping
+    @PostMapping({"/",""})
     @ResponseStatus(HttpStatus.CREATED)
     public void createUser(@RequestBody UserRequest user) {
         userService.saveUser(user);
