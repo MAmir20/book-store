@@ -483,20 +483,20 @@ export const links = [
     title: 'Pages',
     links: [
       {
+        name: 'users',
+        icon: <IoMdContacts />,
+      },
+      {
+        name: 'books',
+        icon: <RiContactsLine />,
+      },
+      {
         name: 'orders',
         icon: <AiOutlineShoppingCart />,
       },
       {
         name: 'employees',
         icon: <IoMdContacts />,
-      },
-      {
-        name: 'users',
-        icon: <IoMdContacts />,
-      },
-      {
-        name: 'customers',
-        icon: <RiContactsLine />,
       },
     ],
   },

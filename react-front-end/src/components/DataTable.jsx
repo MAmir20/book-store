@@ -1,17 +1,25 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 
-const DataTable = ({ headers, data, url, isEditModalOpen, setIsEditModalOpen, isNewUser, setIsNewUser }) => {
+const DataTable = ({ headers, data, url, isEditModalOpen, setIsEditModalOpen, isNewUser, setIsNewUser, setIsChanged, nameItem }) => {
   const [selectedUser, setSelectedUser] = useState(null);
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
-
-  const navigate = useNavigate();
-  const handleDelete = (url1) => {
-    fetch(url1, {
-      method: 'DELETE',
-    }).then(() => {
-      navigate('/users');
-    });
+  const handleDelete = async (url1) => {
+    try {
+      const response = await fetch(url1, {
+        method: 'DELETE',
+      });
+      if (response.ok) {
+      // Handle successful deletion
+        setIsChanged(true); // Redirect to success page
+      } else {
+      // Handle error response
+        throw new Error('Deletion failed');
+      }
+    } catch (error) {
+    // Handle network or other errors
+    // console.error('Error during deletion:', error);
+    // Display an error message to the user
+    }
   };
   const openCreateModal = () => {
     setIsCreateModalOpen(true);
@@ -19,8 +27,11 @@ const DataTable = ({ headers, data, url, isEditModalOpen, setIsEditModalOpen, is
   const closeCreateModal = () => {
     setIsCreateModalOpen(false);
   };
-
+  const cleanEditModel = () => {
+    setSelectedUser(null);
+  };
   const closeEditModal = () => {
+    cleanEditModel();
     setIsEditModalOpen(false);
     if (isNewUser) {
       setIsNewUser(false);
@@ -34,34 +45,30 @@ const DataTable = ({ headers, data, url, isEditModalOpen, setIsEditModalOpen, is
     try {
       const response = await fetch(url1);
       const userData = await response.json();
-      console.log('User Details:', userData);
       setSelectedUser(userData);
+
       openCreateModal();
     } catch (error) {
-      console.error('Error fetching user details:', error);
+      //
     }
   };
   const handleEdit = async (url1) => {
     try {
       const response = await fetch(url1);
       const userData = await response.json();
-      console.log('User Details:', userData);
       setSelectedUser(userData);
       openEditModal();
     } catch (error) {
-      console.error('Error fetching user details:', error);
+      // console.error('Error fetching user details:', error);
     }
   };
   const handleFormSubmit = async (event) => {
     event.preventDefault();
-
-    // Your logic to update the user data on the server
-    // For example, you can use fetch with the PUT method
     try {
       if (isNewUser) {
         // Your logic to create a new user on the server
         // For example, you can use fetch with the POST method
-        await fetch('http://localhost:8081/USER-SERVICE/api/users', {
+        await fetch(url, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -71,7 +78,7 @@ const DataTable = ({ headers, data, url, isEditModalOpen, setIsEditModalOpen, is
       } else {
         // Your logic to update an existing user on the server
         // For example, you can use fetch with the PUT method
-        await fetch(`http://localhost:8081/USER-SERVICE/api/users/${selectedUser.id}`, {
+        await fetch(`${url}/${selectedUser.id}`, {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',
@@ -80,9 +87,9 @@ const DataTable = ({ headers, data, url, isEditModalOpen, setIsEditModalOpen, is
         });
       }
       closeEditModal();
-      navigate('/users');
+      setIsChanged(true);
     } catch (error) {
-      console.error('Error updating user details:', error);
+      // console.error('Error updating user details:', error);
     }
   };
 
@@ -102,13 +109,13 @@ const DataTable = ({ headers, data, url, isEditModalOpen, setIsEditModalOpen, is
             {headers.map((header) => (
               <th
                 scope="col"
-                className="px-6 py-3 text-left text-xs font-medium uppercase"
+                className="px-6 py-3 text-left uppercase"
                 key={header}
               >
                 {header}
               </th>
             ))}
-            <th>Actions</th>
+            <th className="px-6 py-3 text-left uppercase">Actions</th>
           </tr>
         </thead>
         <tbody className="divide-y divide-gray-200">
@@ -135,12 +142,19 @@ const DataTable = ({ headers, data, url, isEditModalOpen, setIsEditModalOpen, is
       {isCreateModalOpen && (
         <div className="fixed inset-0 flex items-center justify-center">
           <div className="absolute p-4 w-1/2 rounded-3xl bg-gray-700">
-            <h2 className="text-xl font-bold mb-4 text-white">User Information</h2>
+            <h2 className="text-xl font-bold mb-4 text-white">{nameItem} Information</h2>
             {selectedUser && (
-              <div className="text-white">
-                <p>ID: {selectedUser.id}</p>
-                <p>Name: {selectedUser.name}</p>
-                <p>Email: {selectedUser.email}</p>
+              <div className="text-white ">
+                {
+                  headers.map((header, index) => (
+                    <p key={index}> <span className="capitalize"> {header}:</span> {header !== 'category' ? (
+                      selectedUser[header]
+                    ) : (
+                      selectedUser[header].name
+                    )}
+                    </p>
+                  ))
+                }
               </div>
             )}
             <button type="button" className="ml-2 bg-gray-500 p-2 text-white rounded-md" onClick={closeCreateModal}>
@@ -154,34 +168,25 @@ const DataTable = ({ headers, data, url, isEditModalOpen, setIsEditModalOpen, is
           <div className="absolute p-4 w-1/2 rounded-3xl bg-gray-700">
             <h2 className="text-xl font-bold mb-4 text-white">Edit User</h2>
             <form onSubmit={handleFormSubmit}>
-              <div className="mb-4">
-                <label htmlFor="name" className="block text-sm font-medium text-white">
-                  Name:
-
-                  <input
-                    type="text"
-                    id="name"
-                    name="name"
-                    value={selectedUser?.name || ''}
-                    onChange={handleInputChange}
-                    className="mt-1 p-2 w-full border rounded-md bg-gray-800 text-white"
-                  />
-                </label>
-              </div>
-              <div className="mb-4">
-                <label htmlFor="email" className="block text-white text-sm font-medium">
-                  Email:
-
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    value={selectedUser?.email || ''}
-                    onChange={handleInputChange}
-                    className="mt-1 p-2 w-full border rounded-md bg-gray-800 text-white"
-                  />
-                </label>
-              </div>
+              {headers.map((header) => (
+                <div className="mb-4" key={header}>
+                  <label htmlFor={header} className="block text-sm font-medium text-white">
+                    {header}:
+                    <input
+                      type="text"
+                      id={header}
+                      name={header}
+                      value={header !== 'category' && selectedUser?.[header] ? (
+                        selectedUser[header]
+                      ) : (selectedUser ? (
+                        selectedUser[header].name
+                      ) : '') || ''}
+                      onChange={handleInputChange}
+                      className="mt-1 p-2 w-full border rounded-md bg-gray-800 text-white"
+                    />
+                  </label>
+                </div>
+              ))}
               <div className="flex justify-end">
                 <button type="submit" className="bg-blue-500 text-white p-2 rounded-md">
                   Save Changes
