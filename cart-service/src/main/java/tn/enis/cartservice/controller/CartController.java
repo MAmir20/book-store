@@ -36,5 +36,11 @@ public class CartController {
     public List<CartResponse> getCarts() {
         return cartService.getCarts();
     }
+
+    @GetMapping("/validate/{cartId}")
+    @ResponseStatus(HttpStatus.OK)
+    public boolean validate(@PathVariable Long cartId) {
+        return cartService.validate(cartId);
+    }
 }
 

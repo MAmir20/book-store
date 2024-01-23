@@ -22,7 +22,7 @@ public class OrderServiceApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		orderRepository.save(new Order(null,new Date(),"Accepté","chéque",new Date()));
+		orderRepository.save(new Order(null,new Date(),"Accepté","chéque",new Date(),Long.valueOf(1)));
 		List<Order> orders =orderRepository.findAll();
 		orders.forEach(o->{
 			System.out.println(o.toString());});
