@@ -11,28 +11,29 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
+@RequestMapping("/api/orders")
 public class OrderController {
     @Autowired
     private OrderRepository orderRepository;
 
-    @GetMapping("/orders")
+    @GetMapping({"/",""})
     public List<Order> getAllOrders() {
         return orderRepository.findAll();
     }
-    @GetMapping("/orders/{orderId}")
+    @GetMapping("/{orderId}")
     public ResponseEntity<Order> findById(@PathVariable Long orderId) {
         Optional<Order> order = orderRepository.findById(orderId);
         return order.map(value -> new ResponseEntity<>(value, HttpStatus.OK))
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-    @PostMapping("/orders")
+    @PostMapping({"/",""})
     public ResponseEntity<Order> createOrder(@RequestBody Order order) {
         Order createdOrder = orderRepository.save(order);
         return new ResponseEntity<>(createdOrder, HttpStatus.CREATED);
     }
 
-    @PutMapping("orders/{orderId}")
+    @PutMapping("/{orderId}")
     public ResponseEntity<Order> updateOrder(@PathVariable Long orderId, @RequestBody Order updatedOrder) {
         if (orderRepository.existsById(orderId)) {
             updatedOrder.setId(orderId);
@@ -43,7 +44,7 @@ public class OrderController {
         }
     }
 
-    @DeleteMapping("orders/{orderId}")
+    @DeleteMapping("/{orderId}")
     public ResponseEntity<Void> deleteOrder(@PathVariable Long orderId) {
         orderRepository.deleteById(orderId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);

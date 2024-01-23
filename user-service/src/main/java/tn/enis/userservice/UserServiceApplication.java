@@ -1,0 +1,28 @@
+package tn.enis.userservice;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import tn.enis.userservice.model.User;
+import tn.enis.userservice.repository.UserRepository;
+
+import java.util.List;
+
+@SpringBootApplication
+public class UserServiceApplication implements CommandLineRunner {
+	@Autowired
+	private UserRepository userRepository;
+
+	public static void main(String[] args) {
+
+		SpringApplication.run(UserServiceApplication.class, args);
+	}
+
+	@Override
+	public void run(String... args) throws Exception {
+		userRepository.save(new User(null, "user1", "user1@gmail.com", "1234"));
+		userRepository.save(new User(null, "user2", "user2@gmail.com", "1234"));
+		userRepository.save(new User(null, "user3", "user3@gmail.com", "1234"));
+	}
+}
