@@ -24,12 +24,12 @@ const DataTable = ({ headers, data, url, isEditModalOpen, setIsEditModalOpen, is
   const openCreateModal = () => {
     setIsCreateModalOpen(true);
   };
+  const cleanEditModel = () => {
+    setSelectedUser(null);
+  };
   const closeCreateModal = () => {
     setIsCreateModalOpen(false);
     cleanEditModel();
-  };
-  const cleanEditModel = () => {
-    setSelectedUser(null);
   };
   const closeEditModal = () => {
     cleanEditModel();
