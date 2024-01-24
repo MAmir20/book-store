@@ -156,9 +156,9 @@ services:
     image: my-book-store-api-gateway-service:v1
     container_name: my-api-gateway-service
     ports:
-      - "8081:8081"
+      - "8087:8087"
     expose:
-      - "8081"
+      - "8087"
     environment:
       DISCOVERY_SERVICE_URL: http://discovery-service:8761/eureka
     depends_on:
