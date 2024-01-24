@@ -26,6 +26,7 @@ const DataTable = ({ headers, data, url, isEditModalOpen, setIsEditModalOpen, is
   };
   const closeCreateModal = () => {
     setIsCreateModalOpen(false);
+    cleanEditModel();
   };
   const cleanEditModel = () => {
     setSelectedUser(null);
