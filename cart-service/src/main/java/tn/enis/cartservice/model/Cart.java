@@ -28,10 +28,10 @@ public class Cart {
     public String toString() {
         return "Cart{" +
                 "id=" + id +
-                ", date=" + date +
+                ", userId='" + userId + '\'' +
+                ", date='" + date + '\'' +
                 ", status=" + status +
                 ", total=" + total +
-                ", cartLineItemsList=" + cartLineItemsList +
                 '}';
     }
 

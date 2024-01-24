@@ -22,6 +22,7 @@ public class Order {
     private String status;
     private String payment;
     private Date deliveryDate;
+    private Long cartId;
 
     @Override
     public String toString() {
@@ -31,6 +32,7 @@ public class Order {
                 ", status=" + status +
                 ", delivery date=" + deliveryDate +
                 ", payment_method=" + payment +
+                ", cartId=" + cartId +
                 '}';
     }
 }
