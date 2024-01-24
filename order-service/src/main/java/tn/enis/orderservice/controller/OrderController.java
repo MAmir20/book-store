@@ -26,7 +26,6 @@ import java.util.concurrent.CompletableFuture;
 public class OrderController {
     private final OrderService orderService;
 
-    private final WebClient.Builder webClientBuilder;
     @Autowired
     private OrderRepository orderRepository;
 
@@ -44,15 +43,15 @@ public class OrderController {
     @PostMapping({"/",""})
     @ResponseStatus(HttpStatus.CREATED)
     @CircuitBreaker(name = "cart", fallbackMethod = "createOrderFallback")
-    @TimeLimiter(name = "cart")
-    @Retry(name = "cart")
-    public CompletableFuture<String> createOrder(@RequestBody Order order) {
-        return CompletableFuture.supplyAsync(() -> orderService.placeOrder(order));
+//    @TimeLimiter(name = "cart")
+//    @Retry(name = "cart")
+    public String createOrder(@RequestBody Order order) {
+        return orderService.placeOrder(order);
     }
 
-    public CompletableFuture<String> createOrderFallback(Order order, Throwable t) {
+    public String createOrderFallback(Order order, Throwable t) {
         log.error("Cannot reach Cart Service ...");
-        return CompletableFuture.supplyAsync(() -> "Cannot reach Cart Service ...");
+        return "Cannot reach Cart Service ...";
     }
 
     @PutMapping("/{orderId}")

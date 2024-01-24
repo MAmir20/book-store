@@ -1,6 +1,7 @@
 package tn.enis.userservice.service;
 
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import tn.enis.userservice.dto.UserRequest;
@@ -61,7 +62,11 @@ public class UserService {
                 .build();
     }
 
+    @SneakyThrows
     public boolean userExists(Long userId) {
+//        log.info("Wait started");
+//        Thread.sleep(10000);
+//        log.info("Wait ended");
         return userRepository.existsById(userId);
     }
 }

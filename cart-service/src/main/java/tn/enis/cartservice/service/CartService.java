@@ -26,7 +26,8 @@ import java.util.stream.Collectors;
 public class CartService {
     private final CartRepository cartRepository;
     private final WebClient.Builder webClientBuilder;
-    public boolean newCart(CartRequest cartRequest) {
+
+    public String newCart(CartRequest cartRequest) {
         // Check if user exists
         boolean userExists = webClientBuilder.build().get()
                 .uri("lb://user-service/api/users/exists",
@@ -39,7 +40,7 @@ public class CartService {
                 .asBoolean();
         if(!userExists) {
             log.error("User {} does not exist", cartRequest.getUserId());
-            return false;
+            return "User does not exist";
         }
 
         // Check if all books are in stock
@@ -47,7 +48,7 @@ public class CartService {
         boolean allBooksInStock = checkBooksAvailability(books);
         if(!allBooksInStock) {
             log.error("Some books are not in stock");
-            return false;
+            return "Some books are not in stock";
         }
         // Create a new cart
         Cart cart = new Cart();
@@ -57,7 +58,7 @@ public class CartService {
         List<CartLineItems> cartLineItems = cartRequest.getCartLineItemsDtoList().stream().map(cartLineItemsDto -> mapToDto(cartLineItemsDto, cart)).toList();
         cart.setCartLineItemsList(cartLineItems);
         cartRepository.save(cart);
-        return true;
+        return "Cart created successfully";
     }
 
     private CartLineItems mapToDto(CartLineItemsDto cartLineItemsDto, Cart cart) {
@@ -77,9 +78,9 @@ public class CartService {
     @SneakyThrows
     public boolean validate(Long cartId) {
         log.info("Validating cart {}", cartId);
-        log.info("Wait started");
-        Thread.sleep(10000);
-        log.info("Wait ended");
+//        log.info("Wait started");
+//        Thread.sleep(10000);
+//        log.info("Wait ended");
         Cart cart = cartRepository.findById(cartId).orElse(null);
         if(cart == null) {
             log.error("Cart {} does not exist", cartId);
