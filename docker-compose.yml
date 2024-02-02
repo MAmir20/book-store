@@ -87,6 +87,10 @@ services:
         condition: service_healthy
       discovery-service:
         condition: service_healthy
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:8084/actuator/health" ]
+      interval: 20s
+      retries: 10
 
   user-service:
     build: ./user-service
@@ -106,6 +110,10 @@ services:
         condition: service_healthy
       discovery-service:
         condition: service_healthy
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:8083/actuator/health" ]
+      interval: 20s
+      retries: 10
 
   cart-service:
     build: ./cart-service
@@ -129,6 +137,10 @@ services:
         condition: service_healthy
       discovery-service:
         condition: service_healthy
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:8086/actuator/health" ]
+      interval: 20s
+      retries: 10
 
   order-service:
     build: ./order-service
@@ -150,7 +162,10 @@ services:
         condition: service_healthy
       discovery-service:
         condition: service_healthy
-
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:8085/actuator/health" ]
+      interval: 20s
+      retries: 10
   api-gateway-service:
     build: ./api-gateway-service
     image: my-book-store-api-gateway-service:v1
