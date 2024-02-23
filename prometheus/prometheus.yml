@@ -5,10 +5,40 @@ global:
 scrape_configs:
   - job_name: 'prometheus'
     static_configs:
-      - targets: ['localhost:9090']
+      - targets: ['prometheus:9090']
   - job_name: 'my-book-service'
     metrics_path: '/actuator/prometheus'
     static_configs:
-      - targets: ['localhost:8084']
+      - targets: ['book-service:8084']
         labels:
-          application: 'Product Service Application'
+          application: 'Book Service Application'
+  - job_name: 'my-user-service'
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets: ['user-service:8083']
+        labels:
+          application: 'User Service Application'
+  - job_name: 'my-cart-service'
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets: [ 'cart-service:8086' ]
+        labels:
+          application: 'Cart Service Application'
+  - job_name: 'my-order-service'
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets: ['order-service:8085']
+        labels:
+          application: 'Order Service Application'
+  - job_name: 'my-api-gateway-service'
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets: [ 'api-gateway-service:8087' ]
+        labels:
+          application: 'Api-gateway Service Application'
+  - job_name: 'my-discovery-service'
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets: [ 'discovery-service:8761' ]
+        labels:
+          application: 'Discovery Service Application'
