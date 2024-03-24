@@ -74,9 +74,9 @@ services:
     image: my-book-store-book-service:v1
     container_name: my-book-service
     ports:
-      - "8084:8084"
+      - "8082:8082"
     expose:
-      - "8084"
+      - "8082"
     environment:
       DISCOVERY_SERVICE_URL: http://discovery-service:8761/eureka
       SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/books_db?createDatabaseIfNotExist=true
@@ -88,7 +88,7 @@ services:
       discovery-service:
         condition: service_healthy
     healthcheck:
-      test: [ "CMD", "curl", "-f", "http://localhost:8084/actuator/health" ]
+      test: [ "CMD", "curl", "-f", "http://localhost:8082/actuator/health" ]
       interval: 20s
       retries: 10
 
