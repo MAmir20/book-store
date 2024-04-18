@@ -69,4 +69,19 @@ public class UserService {
 //        log.info("Wait ended");
         return userRepository.existsById(userId);
     }
+    public Long checkUserCredentials(String email, String password) {
+        User user = userRepository.findByEmail(email);
+        if (user == null) {
+            log.info("User with email {} does not exist", email);
+            return null;
+        } else {
+            if (user.getPassword().equals(password)) {
+                log.info("User with email {} has provided correct password", email);
+                return user.getId();
+            } else {
+                log.info("User with email {} has provided incorrect password", email);
+                return null;
+            }
+        }
+    }
 }

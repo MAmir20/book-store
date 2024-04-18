@@ -40,8 +40,6 @@ export default makeStyles((theme) => ({
   button: {
     marginTop: theme.spacing(3),
     marginLeft: theme.spacing(1),
-    backgroundColor: "black",
-    color : "white"
   },
   divider: {
     margin: '20px 0',
@@ -52,18 +50,17 @@ export default makeStyles((theme) => ({
     alignItems: 'center',
   },
   container: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    minHeight: '100vh',
+    height: "100vh",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
   },
-  content: {
-    textAlign: 'center',
-  },
-  thankYouMessage: {
-    marginBottom: '20px',
-    marginLeft: '20px',
-    marginRight: '20px',
-
+  formContainer: {
+    width: "100%",
+    maxWidth: 400,
+    padding: theme.spacing(3),
+    backgroundColor: "#fff",
+    borderRadius: theme.spacing(1),
+    boxShadow: "0px 0px 20px rgba(0, 0, 0, 0.1)",
   },
 }));

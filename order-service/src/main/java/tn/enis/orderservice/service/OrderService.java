@@ -19,7 +19,7 @@ public class OrderService {
     private final OrderRepository orderRepository;
     private final WebClient.Builder webClientBuilder;
 
-    public String placeOrder(Order order){
+    public Order placeOrder(Order order){
         boolean cartUpdated = webClientBuilder.build().get()
                 .uri("lb://cart-service/api/carts/validate/"+order.getCartId())
                 .retrieve()
@@ -28,10 +28,10 @@ public class OrderService {
                 .asBoolean();
         if(!cartUpdated) {
             log.error("ERROR WHILE PROCESSING ORDER", order.getCartId());
-            return "ERROR WHILE PROCESSING ORDER";
+            return null;
         }
         order.setStatus("ORDERED");
         Order createdOrder = orderRepository.save(order);
-        return "Order created successfully";
+        return createdOrder;
     }
 }
