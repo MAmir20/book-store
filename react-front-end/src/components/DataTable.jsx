@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 
-const DataTable = ({ headers, data, url, isEditModalOpen, setIsEditModalOpen, isNewUser, setIsNewUser, setIsChanged, nameItem }) => {
+const DataTable = ({ headers, data, url, isCreateModalOpen, setIsCreateModalOpen, isEditModalOpen, setIsEditModalOpen, isNewUser, setIsNewUser, setIsChanged, nameItem }) => {
   const [selectedUser, setSelectedUser] = useState(null);
-  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const handleDelete = async (url1) => {
     try {
       const response = await fetch(url1, {
@@ -167,7 +166,7 @@ const DataTable = ({ headers, data, url, isEditModalOpen, setIsEditModalOpen, is
       {isEditModalOpen && (
         <div className="fixed inset-0 flex items-center justify-center">
           <div className="absolute p-4 w-1/2 rounded-3xl bg-gray-700">
-            <h2 className="text-xl font-bold mb-4 text-white">Edit User</h2>
+            <h2 className='text-xl font-bold mb-4 text-white'>{isCreateModalOpen ? 'Create' : 'Edit' } {nameItem}</h2>
             <form onSubmit={handleFormSubmit}>
               {headers.map((header) => (
                 <div className="mb-4" key={header}>

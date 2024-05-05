@@ -77,6 +77,7 @@ services:
       - "8084:8084"
     expose:
       - "8084"
+
     environment:
       DISCOVERY_SERVICE_URL: http://discovery-service:8761/eureka
       SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/books_db?createDatabaseIfNotExist=true
@@ -213,11 +214,9 @@ services:
       - GF_SECURITY_ADMIN_USER=admin
       - GF_SECURITY_ADMIN_PASSWORD=password
 
-
   zipkin:
-    image: ghcr.io/openzipkin/zipkin-slim:${TAG:-latest}
+    image: openzipkin/zipkin
     container_name: zipkin
-    environment:
-      - STORAGE_TYPE=mem
     ports:
-      - 9411:9411
+      - "9411:9411"
+

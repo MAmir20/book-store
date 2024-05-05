@@ -7,10 +7,12 @@ const Users = () => {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isNewUser, setIsNewUser] = useState(false); // Track if it's a new user or an existing one
   const {data, isPending, error } = useFetch('http://localhost:8087/api/users');
+  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [users, setUsers] = useState([]);
   const [isChanged, setIsChanged] = useState(false); // Track if the data has changed
   const openModel = () => {
-    setIsEditModalOpen(true);
+    setIsCreateModalOpen(true);
+    setIsEditModalOpen(false);
     setIsNewUser(true);
   };
   useEffect(() => {
@@ -46,7 +48,7 @@ const Users = () => {
       { error && <div>{ error }</div> }
       { isPending && <div>Loading...</div> }
       { users && (
-        <DataTable headers={headers} data={filtredUsers} nameItem="User" url="http://localhost:8087/api/users" isEditModalOpen={isEditModalOpen} setIsEditModalOpen={setIsEditModalOpen} isNewUser={isNewUser} setIsNewUser={setIsNewUser} setIsChanged={setIsChanged} />
+        <DataTable headers={headers} data={filtredUsers} nameItem="User" url="http://localhost:8087/api/users" isEditModalOpen={isEditModalOpen} setIsEditModalOpen={setIsEditModalOpen} isEditModalOpen={isCreateModalOpen} setIsEditModalOpen={setIsCreateModalOpen}  isNewUser={isNewUser} setIsNewUser={setIsNewUser} setIsChanged={setIsChanged} />
       )}
     </div>
   );
