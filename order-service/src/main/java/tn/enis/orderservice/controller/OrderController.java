@@ -45,7 +45,7 @@ public class OrderController {
     @CircuitBreaker(name = "cart", fallbackMethod = "createOrderFallback")
 //    @TimeLimiter(name = "cart")
 //    @Retry(name = "cart")
-    public String createOrder(@RequestBody Order order) {
+    public Order createOrder(@RequestBody Order order) {
         return orderService.placeOrder(order);
     }
 
@@ -69,6 +69,16 @@ public class OrderController {
     public ResponseEntity<Void> deleteOrder(@PathVariable Long orderId) {
         orderRepository.deleteById(orderId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+    @GetMapping("/latest")
+    public ResponseEntity<Order> getLatestOrder() {
+        // Rechercher la dernière commande dans la base de données
+        Order latestOrder = orderRepository.findTopByOrderByDateDesc(); // Supposons que vous ayez une méthode dans votre repository pour trouver la dernière commande par date
+        if (latestOrder != null) {
+            return new ResponseEntity<>(latestOrder, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 }
 

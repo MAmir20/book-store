@@ -2,6 +2,7 @@ package tn.enis.userservice.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tn.enis.userservice.dto.UserRequest;
 import tn.enis.userservice.dto.UserResponse;
@@ -47,6 +48,20 @@ public class UserController {
     @ResponseStatus(HttpStatus.OK)
     public boolean userExists(@RequestParam Long userId) {
         return userService.userExists(userId);
+    }
+
+
+    @GetMapping("/checkCredentials")
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<Long> checkCredentials(
+            @RequestParam String email,
+            @RequestParam String password) {
+        Long userId = userService.checkUserCredentials(email, password);
+        if (userId != null) {
+            return ResponseEntity.ok(userId);
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
     }
 }
 

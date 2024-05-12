@@ -14,11 +14,10 @@ import tn.enis.cartservice.model.Cart;
 import tn.enis.cartservice.model.CartLineItems;
 import tn.enis.cartservice.repository.CartRepository;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.math.BigDecimal;
+import java.util.*;
 import java.util.stream.Collectors;
+
 
 @Service
 @RequiredArgsConstructor
@@ -38,28 +37,42 @@ public class CartService {
                 .bodyToMono(BooleanNode.class)
                 .block()
                 .asBoolean();
-        if(!userExists) {
+        if (!userExists) {
             log.error("User {} does not exist", cartRequest.getUserId());
             return "User does not exist";
         }
 
         // Check if all books are in stock
-        Map<Long, Integer> books = cartRequest.getCartLineItemsDtoList().stream().collect(Collectors.toMap(CartLineItemsDto::getBookId, CartLineItemsDto::getQuantity));
+        Map<Long, Integer> books = cartRequest.getCartLineItemsDtoList().stream()
+                .collect(Collectors.toMap(CartLineItemsDto::getBookId, CartLineItemsDto::getQuantity));
         boolean allBooksInStock = checkBooksAvailability(books);
-        if(!allBooksInStock) {
+        if (!allBooksInStock) {
             log.error("Some books are not in stock");
             return "Some books are not in stock";
         }
+
+        // Calculate total and totalPrice
+        BigDecimal totalPrice = BigDecimal.ZERO;
+        for (CartLineItemsDto cartLineItem : cartRequest.getCartLineItemsDtoList()) {
+            BigDecimal price = cartLineItem.getPrice();
+            int quantity = cartLineItem.getQuantity();
+            totalPrice = totalPrice.add(price.multiply(BigDecimal.valueOf(quantity)));
+        }
+
         // Create a new cart
         Cart cart = new Cart();
         cart.setUserId(cartRequest.getUserId());
         cart.setDate(cartRequest.getDate());
         cart.setStatus(0L);
-        List<CartLineItems> cartLineItems = cartRequest.getCartLineItemsDtoList().stream().map(cartLineItemsDto -> mapToDto(cartLineItemsDto, cart)).toList();
+        cart.setTotal(totalPrice); // Set total price
+        List<CartLineItems> cartLineItems = cartRequest.getCartLineItemsDtoList().stream()
+                .map(cartLineItemsDto -> mapToDto(cartLineItemsDto, cart))
+                .toList();
         cart.setCartLineItemsList(cartLineItems);
         cartRepository.save(cart);
         return "Cart created successfully";
     }
+
 
     private CartLineItems mapToDto(CartLineItemsDto cartLineItemsDto, Cart cart) {
         CartLineItems cartLineItems = new CartLineItems();
@@ -148,4 +161,109 @@ public class CartService {
         }
         return true;
     }
+
+    public void updateCart(Long cartId, CartRequest cartRequest) {
+        Cart existingCart = cartRepository.findById(cartId)
+                .orElseThrow(() -> new IllegalArgumentException("Cart with ID " + cartId + " not found"));
+
+        existingCart.setDate(cartRequest.getDate());
+        existingCart.setUserId(cartRequest.getUserId());
+        existingCart.setStatus(cartRequest.getStatus());
+
+        List<CartLineItems> cartLineItemsList = existingCart.getCartLineItemsList();
+
+        for (CartLineItemsDto dto : cartRequest.getCartLineItemsDtoList()) {
+            // Chercher l'élément correspondant dans le panier
+            Optional<CartLineItems> existingCartItemOptional = findCartItemByBookId(cartLineItemsList, dto.getBookId());
+
+            if (existingCartItemOptional.isPresent()) {
+                // Mettre à jour la quantité si l'élément existe déjà
+                CartLineItems existingCartItem = existingCartItemOptional.get();
+                existingCartItem.setQuantity(existingCartItem.getQuantity() + dto.getQuantity());
+            } else {
+                // Ajouter un nouvel élément au panier s'il n'existe pas encore
+                CartLineItems newCartItem = mapToDto(dto, existingCart);
+                cartLineItemsList.add(newCartItem);
+            }
+        }
+
+        cartRepository.save(existingCart);
+        log.info("Updated cart: {}", existingCart);
+    }
+
+    private Optional<CartLineItems> findCartItemByBookId(List<CartLineItems> cartLineItemsList, Long bookId) {
+        return cartLineItemsList.stream()
+                .filter(item -> item.getBookId().equals(bookId))
+                .findFirst();
+    }
+
+
+    public void updateCartLineItemQuantity(Long cartId, CartRequest cartRequest) {
+        Cart existingCart = cartRepository.findById(cartId)
+                .orElseThrow(() -> new IllegalArgumentException("Cart with ID " + cartId + " not found"));
+
+        List<CartLineItems> cartLineItemsList = existingCart.getCartLineItemsList();
+        BigDecimal newTotal = BigDecimal.ZERO; // Initialize new total
+
+        // Loop through the cart items in the request
+        for (CartLineItemsDto cartLineItemsDto : cartRequest.getCartLineItemsDtoList()) {
+            // Find the corresponding cart line item in the existing cart
+            for (CartLineItems cartLineItem : cartLineItemsList) {
+                if (cartLineItem.getBookId().equals(cartLineItemsDto.getBookId())) {
+                    // Update the quantity
+                    cartLineItem.setQuantity(cartLineItemsDto.getQuantity());
+
+                    // Update the total price for this item
+                    BigDecimal totalPriceForItem = cartLineItemsDto.getPrice()
+                            .multiply(BigDecimal.valueOf(cartLineItemsDto.getQuantity()));
+                    cartLineItem.setTotalPrice(totalPriceForItem);
+
+                    // Add the total price of this item to the new total
+                    newTotal = newTotal.add(totalPriceForItem);
+
+                    break;
+                }
+            }
+        }
+
+        // Update the total price of the cart
+        existingCart.setTotal(newTotal);
+
+        // Save the updated cart in the database
+        cartRepository.save(existingCart);
+        log.info("Updated cart: {}", existingCart);
+    }
+
+
+    public void removeCartItem(Long cartId, Long bookId) {
+        Cart existingCart = cartRepository.findById(cartId)
+                .orElseThrow(() -> new IllegalArgumentException("Cart with ID " + cartId + " not found"));
+
+        List<CartLineItems> cartLineItemsList = existingCart.getCartLineItemsList();
+
+        // Chercher l'index de l'élément à supprimer
+        int indexToRemove = -1;
+        for (int i = 0; i < cartLineItemsList.size(); i++) {
+            if (cartLineItemsList.get(i).getBookId().equals(bookId)) {
+                indexToRemove = i;
+                break;
+            }
+        }
+
+        // Supprimer l'élément s'il a été trouvé
+        if (indexToRemove != -1) {
+            cartLineItemsList.remove(indexToRemove);
+        } else {
+            // Gérer le cas où l'élément n'est pas trouvé
+            throw new IllegalArgumentException("Item with bookId " + bookId + " not found in cart " + cartId);
+        }
+
+        // Mettre à jour le panier dans la base de données
+        cartRepository.save(existingCart);
+        log.info("Updated cart after removing item with bookId {}: {}", bookId, existingCart);
+    }
+
+
+
+
 }

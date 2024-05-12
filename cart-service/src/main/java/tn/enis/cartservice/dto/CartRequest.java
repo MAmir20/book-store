@@ -20,4 +20,5 @@ public class CartRequest {
     private Long userId;
     private Date date;
     private List<CartLineItemsDto> cartLineItemsDtoList;
+    private Long status;
 }

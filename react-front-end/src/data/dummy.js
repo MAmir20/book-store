@@ -491,12 +491,16 @@ export const links = [
         icon: <RiContactsLine />,
       },
       {
-        name: 'orders',
-        icon: <AiOutlineShoppingCart />,
+        name: 'Categories',
+        icon: <RiContactsLine />,
       },
       {
-        name: 'employees',
-        icon: <IoMdContacts />,
+        name: 'Authors',
+        icon: <RiContactsLine />,
+      },
+      {
+        name: 'orders',
+        icon: <AiOutlineShoppingCart />,
       },
     ],
   },

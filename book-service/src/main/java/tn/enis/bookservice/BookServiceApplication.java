@@ -29,10 +29,10 @@ public class BookServiceApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		Category c1 = new Category(null, "Fantasy");
-		Category c2 = new Category(null, "Science Fiction");
-		Category c3 = new Category(null, "Action & Adventure");
-		Category c4 = new Category(null, "Detective & Mystery");
+		Category c1 = new Category(null, "Fantasy", "https://png.pngtree.com/png-vector/20230926/ourmid/pngtree-tree-fantasy-world-element-png-image_10147512.png");
+		Category c2 = new Category(null, "Science Fiction","https://cdn.pixabay.com/photo/2016/11/16/14/24/science-fiction-1829010_1280.png");
+		Category c3 = new Category(null, "Action & Adventure","https://www.traveliowa.com/userdocs/ogimages/outdoor_adventure_ugc_-brian_gibbs-_2.webp");
+		Category c4 = new Category(null, "Detective & Mystery","r");
 		categoryRepository.save(c1);
 		categoryRepository.save(c2);
 		categoryRepository.save(c3);
