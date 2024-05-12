@@ -34,6 +34,8 @@ target/
 build/
 !**/src/main/**/build/
 !**/src/test/**/build/
+/mysql_keycloak_data
+/realms
 
 ### VS Code ###
 .vscode/

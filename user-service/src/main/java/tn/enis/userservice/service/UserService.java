@@ -1,6 +1,7 @@
 package tn.enis.userservice.service;
 
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import tn.enis.userservice.dto.UserRequest;
@@ -61,7 +62,26 @@ public class UserService {
                 .build();
     }
 
+    @SneakyThrows
     public boolean userExists(Long userId) {
+//        log.info("Wait started");
+//        Thread.sleep(10000);
+//        log.info("Wait ended");
         return userRepository.existsById(userId);
+    }
+    public Long checkUserCredentials(String email, String password) {
+        User user = userRepository.findByEmail(email);
+        if (user == null) {
+            log.info("User with email {} does not exist", email);
+            return null;
+        } else {
+            if (user.getPassword().equals(password)) {
+                log.info("User with email {} has provided correct password", email);
+                return user.getId();
+            } else {
+                log.info("User with email {} has provided incorrect password", email);
+                return null;
+            }
+        }
     }
 }
